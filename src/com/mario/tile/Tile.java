@@ -24,6 +24,7 @@ public abstract class Tile {
         this.heigth = heigth;
         this.soild = soild;
         this.id = id;
+        this.handler=handler;
     }
 
     public abstract void render(Graphics g);

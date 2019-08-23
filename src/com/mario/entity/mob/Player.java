@@ -4,11 +4,14 @@ import com.mario.Game;
 import com.mario.Handler;
 import com.mario.Id;
 import com.mario.entity.Entity;
+import com.mario.states.PlayerState;
 import com.mario.tile.Tile;
 
 import java.awt.*;
 
 public class Player extends Entity {
+
+    private PlayerState state;
 
     private int frame = 0;
     private int frameDelay = 0;
@@ -16,6 +19,7 @@ public class Player extends Entity {
 
     public Player(int x, int y, int width, int heigth, Id id, Handler handler) {
         super(x, y, width, heigth, id, handler);
+        state= PlayerState.SMALL;
     }
 
     @Override
@@ -111,6 +115,7 @@ public class Player extends Entity {
                         heigth *= 2;
                         setX(tpX-width);
                         setY(tpY-heigth);
+                        if(state==PlayerState.SMALL) state= PlayerState.BIG;
                         e.die();
                     }
                 }
@@ -119,7 +124,17 @@ public class Player extends Entity {
                         e.die();
                     }
                     else if (getBounds().intersects(e.getBounds())) {
-                        die();
+                        if(state==PlayerState.BIG){
+                            state=PlayerState.SMALL;
+                            width /= 2;
+                            heigth /= 2;
+                            x+=width;
+                            y+=heigth;
+                        }
+                        else if(state==PlayerState.SMALL) {
+                            state = PlayerState.DEAD;
+                            die();
+                        }
                     }
                 }
             }

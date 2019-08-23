@@ -23,10 +23,10 @@ public class PowerUpBlock extends Tile {
     public void render(Graphics g) {
         if(!poppedUp)
             g.drawImage(powerUp.getImage(),x, spriteY, width, heigth, null);
-        if(activated)
-            g.drawImage(Game.usedPowerUp.getImage(),x, y, width, heigth, null);
-        else
+        if(!activated)
             g.drawImage(Game.powerUp.getImage(),x, y, width, heigth, null);
+        else
+            g.drawImage(Game.usedPowerUp.getImage(),x, y, width, heigth, null);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class PowerUpBlock extends Tile {
         if(activated && !poppedUp){
             spriteY--;
             if(spriteY<= y-heigth){
-                handler.addEntity(new Mushroom(x,spriteY,width,heigth,Id.mushroom,handler));
+                handler.addEntity(new Mushroom(x,spriteY,width,heigth,Id.mushroom, handler));
                 poppedUp=true;
             }
         }

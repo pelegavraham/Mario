@@ -16,6 +16,7 @@ public abstract class Tile {
     public int velX, velY;
     public Id id;
     public Handler handler;
+    public int facing;
 
     public Tile(int x, int y, int width, int heigth, boolean soild, Id id, Handler handler) {
         this.x = x;

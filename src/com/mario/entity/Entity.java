@@ -17,6 +17,7 @@ public abstract class Entity {
     public boolean falling = true;
     public double gravity = 0.0;
     public int facing = 0; // 0-left , 1-rigth
+    public boolean goingDownPipe= false;
 
     public Entity(int x, int y, int width, int heigth, Id id, Handler handler) {
         this.x = x;

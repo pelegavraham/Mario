@@ -1,5 +1,5 @@
 package com.mario;
 
 public enum Id {
-    player, wall, mushroom, powerUp, goomba
+    player, wall, mushroom, powerUp, pipe, goomba
 }

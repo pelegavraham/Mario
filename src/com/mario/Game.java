@@ -27,6 +27,7 @@ public class Game extends Canvas implements Runnable {
     public static Sprite grass;
     public static Sprite powerUp;
     public static Sprite usedPowerUp;
+    public static Sprite pipe;
 
     public static Sprite[] player= new Sprite[10];
     public static Sprite[] goomba= new Sprite[10];
@@ -51,6 +52,7 @@ public class Game extends Canvas implements Runnable {
         grass= new Sprite(sheet, 1,1);
         powerUp= new Sprite(sheet,3,1);
         usedPowerUp= new Sprite(sheet, 4,1);
+        pipe = new Sprite(sheet, 6,1);
         for(int i=0; i<player.length; i++){
             player[i]= new Sprite(sheet, i+1, 16);
         }
@@ -59,7 +61,7 @@ public class Game extends Canvas implements Runnable {
         }
 
         try {
-            image= ImageIO.read(getClass().getResource("/level.png"));
+            image= ImageIO.read(getClass().getResource("/levelPiped.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

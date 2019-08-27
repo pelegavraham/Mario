@@ -54,9 +54,9 @@ public class keyInput implements KeyListener{
                     case KeyEvent.VK_W:
                         entity.setVelY(0);
                         break;
-                    case KeyEvent.VK_S:
-                        entity.setVelY(0);
-                        break;
+                    //case KeyEvent.VK_S:
+                    //    entity.setVelY(0);
+                    //    break;
                     case KeyEvent.VK_A:
                         entity.setVelX(0);
                         break;

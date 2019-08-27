@@ -1,5 +1,6 @@
 package com.mario.entity;
 
+import com.mario.Game;
 import com.mario.Handler;
 import com.mario.Id;
 
@@ -9,7 +10,6 @@ public abstract class Entity {
 
     public int x, y;
     public int width, heigth;
-    public boolean soild;
     public int velX, velY;
     public Id id;
     public Handler handler;
@@ -35,6 +35,10 @@ public abstract class Entity {
 
     public void die(){
         handler.removeEntity(this);
+        Game.lives--;
+        Game.showDeathScrean = true;
+
+        if(Game.lives <= 0) Game.gameOver=true;
     }
 
     public Rectangle getBounds(){

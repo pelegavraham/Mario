@@ -28,6 +28,7 @@ public class Game extends Canvas implements Runnable {
     public static Sprite powerUp;
     public static Sprite usedPowerUp;
     public static Sprite pipe;
+    public static Sprite coin;
 
     public static Sprite[] player= new Sprite[10];
     public static Sprite[] goomba= new Sprite[10];
@@ -35,6 +36,11 @@ public class Game extends Canvas implements Runnable {
     public static Sprite mushroom;
     public static Camera camera;
 
+    public static int coins = 0;
+    public static int lives = 5;
+    public static int deathScreenTime = 0;
+    public static boolean showDeathScrean = true;
+    public static boolean gameOver = false;
 
     public Game(){
         Dimension size= new Dimension(WIDTH*SCALE, HEIGHT *SCALE);
@@ -45,14 +51,17 @@ public class Game extends Canvas implements Runnable {
 
     private void init(){
         handler= new Handler();
-        sheet= new SpriteSheet("/mario5.png");
         camera= new Camera();
-        mushroom= new Sprite(sheet, 2,1);
         addKeyListener(new keyInput());
+
+        sheet= new SpriteSheet("/mario5.png");
+        mushroom= new Sprite(sheet, 2,1);
         grass= new Sprite(sheet, 1,1);
         powerUp= new Sprite(sheet,3,1);
         usedPowerUp= new Sprite(sheet, 4,1);
         pipe = new Sprite(sheet, 6,1);
+        coin = new Sprite(sheet,7,1);
+
         for(int i=0; i<player.length; i++){
             player[i]= new Sprite(sheet, i+1, 16);
         }
@@ -65,7 +74,6 @@ public class Game extends Canvas implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        handler.createLevel(image);
     }
 
     public synchronized void start(){
@@ -126,8 +134,28 @@ public class Game extends Canvas implements Runnable {
         Graphics g= bs.getDrawGraphics();
         g.setColor(Color.blue);
         g.fillRect(0,0,getWidth(),getHeight());
+        if(!showDeathScrean){
+            g.drawImage(coin.getImage(),20,20,75,75,null);
+            g.setColor(Color.white);
+            g.setFont(new Font("Courier",Font.BOLD,35));
+            g.drawString("X "+coins, 90,75);
+        }
+        if(showDeathScrean){
+            if(!gameOver) {
+                g.setColor(Color.white);
+                g.setFont(new Font("Courier", Font.BOLD, 35));
+                g.drawImage(player[4].getImage(), 500, 300, 100, 100, null);
+                g.drawString("X " + lives, 600, 370);
+            }
+            else{
+                g.setColor(Color.white);
+                g.setFont(new Font("Stencil", Font.BOLD, 60));
+                g.drawString("GAME OVER!", 370, 370);
+            }
+        }
+
         g.translate(camera.getX(), camera.getY());
-        handler.render(g);
+        if(!showDeathScrean) handler.render(g);
         g.dispose();
         bs.show();
     }
@@ -138,6 +166,14 @@ public class Game extends Canvas implements Runnable {
         for(Entity e: handler.entities){
             if(e.getId()== Id.player)
                 camera.tick(e);
+        }
+
+        if(showDeathScrean && !gameOver) deathScreenTime++;
+        if(deathScreenTime >=180){
+            showDeathScrean=false;
+            deathScreenTime =0;
+            handler.clearLevel();
+            handler.createLevel(image);
         }
     }
 
@@ -174,9 +210,4 @@ public class Game extends Canvas implements Runnable {
     public static int getSCALE() {
         return SCALE;
     }
-
-    public static String getNAME() {
-        return NAME;
-    }
-
 }

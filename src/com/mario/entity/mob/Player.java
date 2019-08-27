@@ -34,77 +34,52 @@ public class Player extends Entity {
 
     @Override
     public void tick() {
+
         x += velX;
         y += velY;
 
         if(goingDownPipe)
             pixelsTravelled += velY;
 
-        //if(y<0) y=0;
-        //if(y+heigth>=771) y=771-heigth;
         if(velX != 0) animate=true;
         else animate=false;
 
-        for(Tile tile: handler.tiles){
-            if(!tile.soild) break;
-            if(tile.getId()==Id.wall){
-                if(getBoundsTop().intersects(tile.getBounds())){
-                    setVelY(0);
-                    if(jumping) {
-                        jumping = false;
-                        gravity = 0.8;
-                        falling = true;
+        for(int j=0; j< handler.tiles.size(); j++){
+
+            Tile tile= handler.tiles.get(j);
+            if(tile.isSoild() && !goingDownPipe) {
+                if(tile.getId() != Id.coin) {
+                    if (getBoundsTop().intersects(tile.getBounds())) {
+                        setVelY(0);
+                        if (jumping) {
+                            jumping = false;
+                            gravity = 0.8;
+                            falling = true;
+                        }
+                        if (tile.getId() == Id.powerUp) tile.activated = true;
+                    }
+                    if (getBoundsBottom().intersects(tile.getBounds())) {
+                        setVelY(0);
+                        if (falling) falling = false;
+                        if (goingDownPipe) goingDownPipe = false;
+                    } else {
+                        if (!falling && !jumping) {
+                            gravity = 0.8;
+                            falling = true;
+                        }
+                    }
+                    if (getBoundsLeft().intersects(tile.getBounds())) {
+                        setVelX(0);
+                        x = tile.getX() + tile.width;
+                    }
+                    if (getBoundsRigth().intersects(tile.getBounds())) {
+                        setVelX(0);
+                        x = tile.getX() - tile.width;
                     }
                 }
-                if(getBoundsBottom().intersects(tile.getBounds())){
-                    setVelY(0);
-                    if(falling) falling=false;
-                }
-                else{
-                    if(!falling && !jumping){
-                        gravity=0.8;
-                        falling=true;
-                    }
-                }
-                if(getBoundsLeft().intersects(tile.getBounds())){
-                    setVelX(0);
-                    x= tile.getX()+ tile.width;
-                }
-                if(getBoundsRigth().intersects(tile.getBounds())){
-                    setVelX(0);
-                    x= tile.getX()- tile.width;
-                }
-            }
-
-            if(tile.getId()== Id.powerUp){
-
-                if (getBoundsTop().intersects(tile.getBounds())) {
-                    setVelY(0);
-                    if (jumping) {
-                        jumping = false;
-                        gravity = 0.8;
-                        falling = true;
-                    }
-                    tile.activated = true;
-                }
-                if (getBoundsBottom().intersects(tile.getBounds())) {
-                    setVelY(0);
-                    if (falling) falling = false;
-                } else {
-                    if (!falling && !jumping) {
-                        gravity = 0.8;
-                        falling = true;
-                    }
-                }
-
-                if (getBoundsLeft().intersects(tile.getBounds())) {
-                    setVelX(0);
-                    x = tile.getX() + tile.width;
-                }
-
-                if (getBoundsRigth().intersects(tile.getBounds())) {
-                    setVelX(0);
-                    x = tile.getX() - tile.width;
+                else if(getBounds().intersects(tile.getBounds()) && tile.getId()==Id.coin){
+                    Game.coins++;
+                    tile.die();
                 }
             }
 
@@ -142,6 +117,7 @@ public class Player extends Entity {
                 }
             }
         }
+
         if(jumping && !goingDownPipe){
             gravity -= 0.1;
             setVelY((int) -gravity);
@@ -164,20 +140,23 @@ public class Player extends Entity {
                 frameDelay = 0;
             }
         }
-        for(Tile tile: Game.handler.tiles){
-            if(tile.getId()==Id.pipe){
-                if(getBoundsBottom().intersects(tile.getBounds())) {
-                    switch (tile.facing) {
-                        case (0):
-                            setVelY(-5);
-                            setVelX(0);
-                            break;
-                        case (2):
-                            setVelY(5);
-                            setVelX(0);
-                            break;
+        if(goingDownPipe) {
+            for(int k=0; k< Game.handler.tiles.size(); k++){
+                Tile tile= Game.handler.tiles.get(k);
+                if (tile.getId() == Id.pipe) {
+                    if (getBoundsBottom().intersects(tile.getBounds())) {
+                        switch (tile.facing) {
+                            case (0):
+                                setVelY(-5);
+                                setVelX(0);
+                                break;
+                            case (2):
+                                setVelY(5);
+                                setVelX(0);
+                                break;
+                        }
+                        if (pixelsTravelled > tile.heigth){ goingDownPipe = false; }
                     }
-                    if (pixelsTravelled > tile.heigth + heigth) goingDownPipe = false;
                 }
             }
         }

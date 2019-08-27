@@ -4,10 +4,7 @@ import com.mario.entity.Entity;
 import com.mario.entity.mob.Goomba;
 import com.mario.entity.mob.Player;
 import com.mario.entity.powerUp.Mushroom;
-import com.mario.tile.Pipe;
-import com.mario.tile.PowerUpBlock;
-import com.mario.tile.Tile;
-import com.mario.tile.Wall;
+import com.mario.tile.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -69,7 +66,14 @@ public class Handler {
                     addEntity(new Goomba(x*64,y*64,64,64, Id.goomba, this));
                 if(red==0 && (green>123 && green<129) && blue==0)
                     addTile(new Pipe(x*64, y*64, 64,64*16,true,Id.pipe, this, 128-green));
+                if(red==255 && green==250 && blue==0)
+                    addTile(new Coin(x*64, y*64, 64,64,true,Id.coin, this));
             }
         }
+    }
+
+    public void clearLevel(){
+        entities.clear();
+        tiles.clear();
     }
 }

@@ -39,7 +39,7 @@ public class Game extends Canvas implements Runnable {
     public static int coins = 0;
     public static int lives = 5;
     public static int deathScreenTime = 0;
-    public static boolean showDeathScrean = true;
+    public static boolean showDeathScreen = true;
     public static boolean gameOver = false;
 
     public Game(){
@@ -134,13 +134,13 @@ public class Game extends Canvas implements Runnable {
         Graphics g= bs.getDrawGraphics();
         g.setColor(Color.blue);
         g.fillRect(0,0,getWidth(),getHeight());
-        if(!showDeathScrean){
+        if(!showDeathScreen){
             g.drawImage(coin.getImage(),20,20,75,75,null);
             g.setColor(Color.white);
             g.setFont(new Font("Courier",Font.BOLD,35));
             g.drawString("X "+coins, 90,75);
         }
-        if(showDeathScrean){
+        if(showDeathScreen){
             if(!gameOver) {
                 g.setColor(Color.white);
                 g.setFont(new Font("Courier", Font.BOLD, 35));
@@ -155,7 +155,7 @@ public class Game extends Canvas implements Runnable {
         }
 
         g.translate(camera.getX(), camera.getY());
-        if(!showDeathScrean) handler.render(g);
+        if(!showDeathScreen) handler.render(g);
         g.dispose();
         bs.show();
     }
@@ -168,9 +168,9 @@ public class Game extends Canvas implements Runnable {
                 camera.tick(e);
         }
 
-        if(showDeathScrean && !gameOver) deathScreenTime++;
+        if(showDeathScreen && !gameOver) deathScreenTime++;
         if(deathScreenTime >=180){
-            showDeathScrean=false;
+            showDeathScreen =false;
             deathScreenTime =0;
             handler.clearLevel();
             handler.createLevel(image);

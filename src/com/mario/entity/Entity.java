@@ -36,7 +36,7 @@ public abstract class Entity {
     public void die(){
         handler.removeEntity(this);
         Game.lives--;
-        Game.showDeathScrean = true;
+        Game.showDeathScreen = true;
 
         if(Game.lives <= 0) Game.gameOver=true;
     }

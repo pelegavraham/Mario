@@ -2,6 +2,7 @@ package com.mario;
 
 import com.mario.entity.Coin;
 import com.mario.entity.Entity;
+import com.mario.entity.Koopa;
 import com.mario.entity.mob.Goomba;
 import com.mario.entity.mob.Player;
 import com.mario.entity.mob.TowerBoss;
@@ -25,10 +26,10 @@ public class Handler {
     }
 
     public void tick(){
-        for(Entity e: entities)
-            e.tick();
-        for(Tile t: tiles)
-            t.tick();
+        for(int i=0; i<entities.size(); i++)
+            entities.get(i).tick();
+        for(int i=0; i<tiles.size(); i++)
+            tiles.get(i).tick();
     }
 
     public void addEntity(Entity e){
@@ -38,9 +39,7 @@ public class Handler {
         entities.remove(e);
     }
     public void addTile(Tile t){ tiles.add(t); }
-    public void removeTile(Tile t){
-        tiles.remove(t);
-    }
+    public void removeTile(Tile t){ tiles.remove(t); }
 
     public void createLevel(BufferedImage level){
 
@@ -70,6 +69,8 @@ public class Handler {
                     addEntity(new Coin(x*64, y*64, 64,64,Id.coin, this));
                 if(red==255 && green==0 && blue==255)
                     addEntity(new TowerBoss(x*64, y*64, 64,64, Id.bross, this,3));
+                if(red==0 && green==255 && blue==0)
+                    addEntity(new Koopa(x*64,y*64,64,64, Id.koopa, this));
             }
         }
     }

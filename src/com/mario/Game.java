@@ -38,10 +38,12 @@ public class Game extends Canvas implements Runnable {
     public static Sprite[] player= new Sprite[10];
     public static Sprite[] goomba= new Sprite[10];
     public static Sprite[] bross= new Sprite[3];
+    public static Sprite[] koopa= new Sprite[4];
 
     public static int coins = 0;
     public static int lives = 5;
     public static int deathScreenTime = 0;
+    private static int playerX, playerY;
 
     public static boolean showDeathScreen = true;
     public static boolean gameOver = false;
@@ -76,6 +78,9 @@ public class Game extends Canvas implements Runnable {
         }
         for(int i=0; i<bross.length; i++){
             bross[i]= new Sprite(sheet, i+1, 14);
+        }
+        for(int i=0; i<koopa.length; i++){
+            koopa[i]= new Sprite(sheet, i+1, 13);
         }
 
         try {
@@ -186,11 +191,23 @@ public class Game extends Canvas implements Runnable {
         }
     }
 
-    public int getFrameWidth(){
+    public static Rectangle getVisibleArea(){
+        for(int i=0; i<handler.entities.size(); i++){
+            Entity e= handler.entities.get(i);
+            if(e.getId()==Id.player){
+                playerX = e.getX();
+                playerY= e.getY();
+                return new Rectangle(playerX-(getFrameWidth()/2-5), playerY-(getFrameHeight()/2-5),getFrameWidth()+10,getFrameHeight()+10);
+            }
+        }
+        return new Rectangle(playerX-(getFrameWidth()/2-5), playerY-(getFrameHeight()/2-5),getFrameWidth()+10,getFrameHeight()+10);
+    }
+
+    public static int getFrameWidth(){
         return getWIDTH()*getSCALE();
     }
 
-    public int getFrameHeight(){
+    public static int getFrameHeight(){
         return getHEIGHT()*getSCALE();
     }
 

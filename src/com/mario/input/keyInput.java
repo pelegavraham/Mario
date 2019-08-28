@@ -22,8 +22,14 @@ public class keyInput implements KeyListener{
                 if(entity.goingDownPipe) return;
                 switch (key) {
                     case KeyEvent.VK_W:
-                        if(! entity.jumping) entity.jumping=true;
-                        entity.gravity = 10.0;
+                        for(Tile t :Game.handler.tiles) {
+                            if (t.isSoild())
+                                if (entity.getBoundsBottom().intersects(t.getBounds()))
+                                    if (!entity.jumping) {
+                                        entity.jumping = true;
+                                        entity.gravity = 8.0;
+                                    }
+                        }
                         break;
                     case KeyEvent.VK_S:
                         for(Tile t :Game.handler.tiles){

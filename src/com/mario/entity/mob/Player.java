@@ -177,7 +177,7 @@ public class Player extends Entity {
                                 setVelX(0);
                                 break;
                         }
-                        if (pixelsTravelled > tile.heigth){ goingDownPipe = false; }
+                        if (pixelsTravelled > tile.heigth*2 + height){ goingDownPipe = false; }
                     }
                 }
             }

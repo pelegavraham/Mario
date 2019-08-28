@@ -13,10 +13,12 @@ public class PowerUpBlock extends Tile {
     private Sprite powerUp;
     private boolean poppedUp = false;
     private int spriteY = getY();
+    private int type;
 
-    public PowerUpBlock(int x, int y, int width, int heigth, boolean soild, Id id, Handler handler, Sprite powerUp) {
+    public PowerUpBlock(int x, int y, int width, int heigth, boolean soild, Id id, Handler handler, Sprite powerUp, int type) {
         super(x, y, width, heigth, soild, id, handler);
         this.powerUp=powerUp;
+        this.type= type;
     }
 
     @Override
@@ -34,7 +36,7 @@ public class PowerUpBlock extends Tile {
         if(activated && !poppedUp){
             spriteY--;
             if(spriteY<= y-heigth){
-                handler.addEntity(new Mushroom(x,spriteY,width,heigth,Id.mushroom, handler));
+                handler.addEntity(new Mushroom(x,spriteY,width,heigth,Id.mushroom, handler, type));
                 poppedUp=true;
             }
         }

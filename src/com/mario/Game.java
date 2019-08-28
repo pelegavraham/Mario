@@ -2,6 +2,7 @@ package com.mario;
 import com.mario.entity.Entity;
 import com.mario.gfx.Sprite;
 import com.mario.gfx.SpriteSheet;
+import com.mario.gfx.frames.MainFrame;
 import com.mario.input.keyInput;
 
 import javax.imageio.ImageIO;
@@ -17,11 +18,13 @@ public class Game extends Canvas implements Runnable {
     public static final int HEIGHT =192;
     public static final int SCALE =4;
     public static final String NAME="Super-Mario";
+    //public static final String imagesPath = System.getProperty("user.dir")+"\\images";
 
     private Thread thread;
-    private boolean running= false;
     private BufferedImage image;
     public static Handler handler;
+    public static Camera camera;
+
     public static SpriteSheet sheet;
 
     public static Sprite grass;
@@ -29,18 +32,20 @@ public class Game extends Canvas implements Runnable {
     public static Sprite usedPowerUp;
     public static Sprite pipe;
     public static Sprite coin;
+    public static Sprite mushroom;
+    public static Sprite upMushroom;
 
     public static Sprite[] player= new Sprite[10];
     public static Sprite[] goomba= new Sprite[10];
-
-    public static Sprite mushroom;
-    public static Camera camera;
+    public static Sprite[] bross= new Sprite[3];
 
     public static int coins = 0;
     public static int lives = 5;
     public static int deathScreenTime = 0;
+
     public static boolean showDeathScreen = true;
     public static boolean gameOver = false;
+    private boolean running= false;
 
     public Game(){
         Dimension size= new Dimension(WIDTH*SCALE, HEIGHT *SCALE);
@@ -56,6 +61,7 @@ public class Game extends Canvas implements Runnable {
 
         sheet= new SpriteSheet("/mario5.png");
         mushroom= new Sprite(sheet, 2,1);
+        upMushroom= new Sprite(sheet, 8,1);
         grass= new Sprite(sheet, 1,1);
         powerUp= new Sprite(sheet,3,1);
         usedPowerUp= new Sprite(sheet, 4,1);
@@ -67,6 +73,9 @@ public class Game extends Canvas implements Runnable {
         }
         for(int i=0; i<goomba.length; i++){
             goomba[i]= new Sprite(sheet, i+1, 15);
+        }
+        for(int i=0; i<bross.length; i++){
+            bross[i]= new Sprite(sheet, i+1, 14);
         }
 
         try {

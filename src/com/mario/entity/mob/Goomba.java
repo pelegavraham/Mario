@@ -36,10 +36,10 @@ public class Goomba extends Entity{
     @Override
     public void render(Graphics g) {
         if(facing==0) {
-            g.drawImage(Game.goomba[frame+5].getImage(),x, y, width, heigth, null);
+            g.drawImage(Game.goomba[frame+5].getImage(),x, y, width, height, null);
         }
         else{
-            g.drawImage(Game.goomba[frame].getImage(),x, y, width, heigth, null);
+            g.drawImage(Game.goomba[frame].getImage(),x, y, width, height, null);
         }
     }
 

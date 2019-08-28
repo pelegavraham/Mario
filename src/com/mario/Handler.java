@@ -1,8 +1,10 @@
 package com.mario;
 
+import com.mario.entity.Coin;
 import com.mario.entity.Entity;
 import com.mario.entity.mob.Goomba;
 import com.mario.entity.mob.Player;
+import com.mario.entity.mob.TowerBoss;
 import com.mario.entity.powerUp.Mushroom;
 import com.mario.tile.*;
 
@@ -57,17 +59,17 @@ public class Handler {
                 if(red==0 && green==0 && blue==0)
                     addTile(new Wall(x*64,y*64,64,64,true, Id.wall,this));
                 if(red==255 && green==255 && blue==0)
-                    addTile(new PowerUpBlock(x*64,y*64,64,64,true, Id.powerUp,this,Game.mushroom));
+                    addTile(new PowerUpBlock(x*64,y*64,64,64,true, Id.powerUp,this,Game.upMushroom,1));
                 if(red==0 && green==0 && blue==255)
-                    addEntity(new Player(x*64,y*64,64,64,Id.player,this));
-                if(red==255 && green==0 && blue==0)
-                    addEntity(new Mushroom(x*64,y*64,64,64,Id.mushroom,this));
+                    addEntity(new Player(x*64,y*64,48,48,Id.player,this));
                 if(red==255 && green==119 && blue==0)
                     addEntity(new Goomba(x*64,y*64,64,64, Id.goomba, this));
                 if(red==0 && (green>123 && green<129) && blue==0)
                     addTile(new Pipe(x*64, y*64, 64,64*16,true,Id.pipe, this, 128-green));
                 if(red==255 && green==250 && blue==0)
-                    addTile(new Coin(x*64, y*64, 64,64,true,Id.coin, this));
+                    addEntity(new Coin(x*64, y*64, 64,64,Id.coin, this));
+                if(red==255 && green==0 && blue==255)
+                    addEntity(new TowerBoss(x*64, y*64, 64,64, Id.bross, this,3));
             }
         }
     }

@@ -38,7 +38,7 @@ public class Game extends Canvas implements Runnable {
     public static Sprite[] player= new Sprite[10];
     public static Sprite[] goomba= new Sprite[10];
     public static Sprite[] bross= new Sprite[3];
-    public static Sprite[] koopa= new Sprite[4];
+    public static Sprite[] koopa= new Sprite[6];
 
     public static int coins = 0;
     public static int lives = 5;

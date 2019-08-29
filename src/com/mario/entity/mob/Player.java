@@ -5,10 +5,12 @@ import com.mario.Handler;
 import com.mario.Id;
 import com.mario.entity.Entity;
 import com.mario.states.BossState;
+import com.mario.states.KoopaState;
 import com.mario.states.PlayerState;
 import com.mario.tile.Tile;
 
 import java.awt.*;
+import java.util.Random;
 
 public class Player extends Entity {
 
@@ -18,6 +20,8 @@ public class Player extends Entity {
     private int frameDelay = 0;
     private boolean animate = false;
     private int pixelsTravelled = 0;
+
+    private Random random= new Random();
 
     public Player(int x, int y, int width, int heigth, Id id, Handler handler) {
         super(x, y, width, heigth, id, handler);
@@ -136,6 +140,60 @@ public class Player extends Entity {
             else if(e.getId()==Id.coin && getBounds().intersects(e.getBounds())){
                 Game.coins++;
                 e.die();
+            }
+            else if(e.getId()==Id.koopa){
+
+                if (e.koopaState==KoopaState.WALKING) {
+
+                    if (getBoundsBottom().intersects(e.getBoundsTop())) {
+                        e.koopaState = KoopaState.SHELL;
+
+                        jumping = true;
+                        falling = false;
+                        gravity = 3.5;
+                    } else if (getBounds().intersects(e.getBounds())) die();
+
+                }
+                else if(e.koopaState==KoopaState.SHELL) {
+
+                    if (getBoundsBottom().intersects(e.getBoundsTop())) {
+                        e.koopaState = KoopaState.SPINNING;
+
+                        int dir = random.nextInt(2);
+                        switch (dir) {
+                            case (0):
+                                e.setVelX(-8);
+                                facing = 1;
+                                break;
+                            case (1):
+                                e.setVelX(8);
+                                facing = 0;
+                                break;
+                        }
+
+                        jumping = true;
+                        falling = false;
+                        gravity = 3.5;
+                    } else if (getBoundsLeft().intersects(e.getBoundsRigth())) {
+                        e.setVelX(-8);
+                        e.koopaState = KoopaState.SPINNING;
+                    } else if (getBoundsRigth().intersects(e.getBoundsLeft())) {
+                        e.setVelX(8);
+                        e.koopaState = KoopaState.SPINNING;
+                    }
+
+                }
+                else if(e.koopaState==KoopaState.SPINNING) {
+
+                    if (getBoundsBottom().intersects(e.getBoundsTop())) {
+                        e.koopaState = KoopaState.SHELL;
+
+                        jumping = true;
+                        falling = false;
+                        gravity = 3.5;
+                    } else if (getBounds().intersects(e.getBounds())) die();
+
+                }
             }
         }
 

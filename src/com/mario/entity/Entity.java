@@ -4,6 +4,7 @@ import com.mario.Game;
 import com.mario.Handler;
 import com.mario.Id;
 import com.mario.states.BossState;
+import com.mario.states.KoopaState;
 
 import java.awt.*;
 
@@ -20,7 +21,9 @@ public abstract class Entity {
 
     public Id id;
     public Handler handler;
+
     public BossState bossState;
+    public KoopaState koopaState;
 
     public boolean goingDownPipe= false;
     public boolean jumping = false;

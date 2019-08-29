@@ -64,13 +64,15 @@ public class Handler {
                 if(red==255 && green==119 && blue==0)
                     addEntity(new Goomba(x*64,y*64,64,64, Id.goomba, this));
                 if(red==0 && (green>123 && green<129) && blue==0)
-                    addTile(new Pipe(x*64, y*64, 64,64*16,true,Id.pipe, this, 128-green));
+                    addTile(new Pipe(x*64, y*64, 64,64*16,true,Id.pipe, this, 128-green,true));
                 if(red==255 && green==250 && blue==0)
                     addEntity(new Coin(x*64, y*64, 64,64,Id.coin, this));
                 if(red==255 && green==0 && blue==255)
                     addEntity(new TowerBoss(x*64, y*64, 64,64, Id.bross, this,3));
                 if(red==0 && green==255 && blue==0)
                     addEntity(new Koopa(x*64,y*64,64,64, Id.koopa, this));
+                if(red==255 && green==0 && blue==0)
+                    addTile(new Flag(x*64,y*64,64,64*5,true, Id.flag,this));
             }
         }
     }

@@ -53,6 +53,11 @@ public class Player extends Entity {
 
             Tile tile = handler.tiles.get(j);
             if (tile.isSoild() && !goingDownPipe) {
+                if(getBounds().intersects(tile.getBounds())){
+                    if(tile.getId()== Id.flag){
+                        Game.switchLevel();
+                    }
+                }
                 if (getBoundsTop().intersects(tile.getBounds())) {
                     setVelY(0);
                     if (jumping) {
@@ -107,7 +112,7 @@ public class Player extends Entity {
                         break;
                 }
             }
-            else if(e.getId()==Id.goomba || e.getId()==Id.bross) {
+            else if(e.getId()==Id.goomba || e.getId()==Id.bross || e.getId()==Id.plant) {
                 if(getBoundsBottom().intersects(e.getBoundsTop())){
                     if(e.getId()!=Id.bross) e.die();
                     else if(e.attackable){

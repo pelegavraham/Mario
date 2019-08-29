@@ -18,12 +18,13 @@ public class Game extends Canvas implements Runnable {
     public static final int HEIGHT =192;
     public static final int SCALE =4;
     public static final String NAME="Super-Mario";
+    private static int level = 0;
     //public static final String imagesPath = System.getProperty("user.dir")+"\\images";
 
     private Thread thread;
-    private BufferedImage image;
     public static Handler handler;
     public static Camera camera;
+    public static BufferedImage[] levels= new BufferedImage[2];
 
     public static SpriteSheet sheet;
 
@@ -34,11 +35,13 @@ public class Game extends Canvas implements Runnable {
     public static Sprite coin;
     public static Sprite mushroom;
     public static Sprite upMushroom;
+    public static Sprite plant;
 
     public static Sprite[] player= new Sprite[10];
     public static Sprite[] goomba= new Sprite[10];
     public static Sprite[] bross= new Sprite[3];
     public static Sprite[] koopa= new Sprite[6];
+    public static Sprite[] flag= new Sprite[3];
 
     public static int coins = 0;
     public static int lives = 5;
@@ -69,6 +72,7 @@ public class Game extends Canvas implements Runnable {
         usedPowerUp= new Sprite(sheet, 4,1);
         pipe = new Sprite(sheet, 6,1);
         coin = new Sprite(sheet,7,1);
+        plant= new Sprite(sheet, 12,1);
 
         for(int i=0; i<player.length; i++){
             player[i]= new Sprite(sheet, i+1, 16);
@@ -82,9 +86,13 @@ public class Game extends Canvas implements Runnable {
         for(int i=0; i<koopa.length; i++){
             koopa[i]= new Sprite(sheet, i+1, 13);
         }
+        for(int i=9; i<=11; i++) {
+            flag[i-9] = new Sprite(sheet, i, 1);
+        }
 
         try {
-            image= ImageIO.read(getClass().getResource("/levelPiped.png"));
+            levels[0] = ImageIO.read(getClass().getResource("/level1.png"));
+            levels[1] = ImageIO.read(getClass().getResource("/level2.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -187,7 +195,7 @@ public class Game extends Canvas implements Runnable {
             showDeathScreen =false;
             deathScreenTime =0;
             handler.clearLevel();
-            handler.createLevel(image);
+            handler.createLevel(levels[level]);
         }
     }
 
@@ -203,6 +211,12 @@ public class Game extends Canvas implements Runnable {
         return new Rectangle(playerX-(getFrameWidth()/2-5), playerY-(getFrameHeight()/2-5),getFrameWidth()+10,getFrameHeight()+10);
     }
 
+    public static void switchLevel() {
+        Game.level++;
+        handler.clearLevel();
+        handler.createLevel(levels[level]);
+    }
+
     public static int getFrameWidth(){
         return getWIDTH()*getSCALE();
     }
@@ -212,15 +226,8 @@ public class Game extends Canvas implements Runnable {
     }
 
     public static void main (String [] args){
-        Game game=new Game();
-        JFrame frame= new JFrame(NAME);
-        frame.add(game, BorderLayout.CENTER);
-        frame.pack();
-        frame.setResizable(false);
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-        game.start();
+        MainFrame mainFrame = new MainFrame();
+
     }
 
     //==================================================================================================================

@@ -50,7 +50,10 @@ public abstract class Entity {
             Game.lives--;
             Game.showDeathScreen = true;
 
-            if(Game.lives <= 0) Game.gameOver=true;
+            if(Game.lives <= 0) {
+                Game.gameOver=true;
+                Game.theGameOver.play();
+            }
         }
     }
 

@@ -56,6 +56,7 @@ public class Player extends Entity {
                 if(getBounds().intersects(tile.getBounds())){
                     if(tile.getId()== Id.flag){
                         Game.switchLevel();
+                        Game.levelEnd.play();
                     }
                 }
                 if (getBoundsTop().intersects(tile.getBounds())) {
@@ -102,19 +103,24 @@ public class Player extends Entity {
                             setY(tpY- height);
                             if(state==PlayerState.SMALL) state= PlayerState.BIG;
                             e.die();
+                            Game.thePowerUp.play();
                         }
                         break;
                     case(1):
                         if(getBounds().intersects(e.getBounds())) {
                             Game.lives++;
                             e.die();
+                            Game.thePowerUp.play();
                         }
                         break;
                 }
             }
             else if(e.getId()==Id.goomba || e.getId()==Id.bross || e.getId()==Id.plant) {
                 if(getBoundsBottom().intersects(e.getBoundsTop())){
-                    if(e.getId()!=Id.bross) e.die();
+                    if(e.getId()!=Id.bross) {
+                        e.die();
+                        Game.stomp.play();
+                    }
                     else if(e.attackable){
                         e.hp--;
                         e.falling=true;
@@ -145,6 +151,7 @@ public class Player extends Entity {
             else if(e.getId()==Id.coin && getBounds().intersects(e.getBounds())){
                 Game.coins++;
                 e.die();
+                Game.collectCoin.play();
             }
             else if(e.getId()==Id.koopa){
 
@@ -156,7 +163,10 @@ public class Player extends Entity {
                         jumping = true;
                         falling = false;
                         gravity = 3.5;
-                    } else if (getBounds().intersects(e.getBounds())) die();
+                    } else if (getBounds().intersects(e.getBounds())) {
+                        die();
+                        Game.marioDie.play();
+                    }
 
                 }
                 else if(e.koopaState==KoopaState.SHELL) {
@@ -196,7 +206,10 @@ public class Player extends Entity {
                         jumping = true;
                         falling = false;
                         gravity = 3.5;
-                    } else if (getBounds().intersects(e.getBounds())) die();
+                    } else if (getBounds().intersects(e.getBounds())) {
+                        die();
+                        Game.marioDie.play();
+                    }
 
                 }
             }

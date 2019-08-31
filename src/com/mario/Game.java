@@ -6,6 +6,8 @@ import com.mario.gfx.frames.MainFrame;
 import com.mario.input.keyInput;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -24,6 +26,16 @@ public class Game extends Canvas implements Runnable {
     private Thread thread;
     public static Handler handler;
     public static Camera camera;
+    public static Sound theme;
+    public static Sound collectCoin;
+    public static Sound marioDie;
+    public static Sound theGameOver;
+    public static Sound jump;
+    public static Sound levelEnd;
+    public static Sound thePowerUp;
+    public static Sound stomp;
+
+
     public static BufferedImage[] levels= new BufferedImage[2];
 
     public static SpriteSheet sheet;
@@ -94,6 +106,25 @@ public class Game extends Canvas implements Runnable {
             levels[0] = ImageIO.read(getClass().getResource("/level1.png"));
             levels[1] = ImageIO.read(getClass().getResource("/level2.png"));
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+
+            theme= new Sound("/MARIO.wav");
+            collectCoin =new Sound("/coin.wav");
+            marioDie =new Sound("/die.wav");
+            theGameOver =new Sound("/gameOver.wav");
+            jump =new Sound("/jump.wav");
+            levelEnd =new Sound("/levelEnd.wav");
+            thePowerUp =new Sound("/powerUp.wav");
+            stomp =new Sound("/stomp.wav");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
             e.printStackTrace();
         }
     }
@@ -196,6 +227,7 @@ public class Game extends Canvas implements Runnable {
             deathScreenTime =0;
             handler.clearLevel();
             handler.createLevel(levels[level]);
+            theme.play();
         }
     }
 

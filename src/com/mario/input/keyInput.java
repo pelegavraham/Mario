@@ -28,6 +28,7 @@ public class keyInput implements KeyListener{
                                     if (!entity.jumping) {
                                         entity.jumping = true;
                                         entity.gravity = 8.0;
+                                        Game.jump.play();
                                     }
                         }
                         break;

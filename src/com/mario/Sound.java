@@ -6,6 +6,7 @@ import java.io.IOException;
 public class Sound {
 
     private Clip clip;
+    private long clipTime;
 
     public Sound(String path) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
 
@@ -28,6 +29,7 @@ public class Sound {
         stop();
         clip.setFramePosition(0);
         clip.start();
+        Game.themePlay=true;
     }
 
     public void close(){
@@ -36,7 +38,25 @@ public class Sound {
     }
 
     public void stop(){
-        if(clip.isRunning()) clip.stop();
+        if(clip.isRunning()) {
+            clip.stop();
+            Game.themePlay=false;
+        }
+    }
+
+    public void pause(){
+        if(Game.themePlay || clip.isRunning()) {
+            if (clip.isRunning()) {
+                clipTime = clip.getMicrosecondPosition();
+                clip.stop();
+                clip.setMicrosecondPosition(clipTime);
+                Game.themePlay=false;
+            }
+        }
+        else{
+            clip.start();
+            Game.themePlay=true;
+        }
     }
 
 }

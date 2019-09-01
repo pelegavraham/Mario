@@ -150,6 +150,11 @@ public class Player extends Entity {
             }
             else if(e.getId()==Id.coin && getBounds().intersects(e.getBounds())){
                 Game.coins++;
+                if(Game.coins>=100){
+                    Game.lives++;
+                    Game.coins=0;
+                    Game.thePowerUp.play();
+                }
                 e.die();
                 Game.collectCoin.play();
             }

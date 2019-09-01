@@ -47,6 +47,12 @@ public class keyInput implements KeyListener{
                         entity.setVelX(5);
                         entity.facing =1;
                         break;
+                    case KeyEvent.VK_Q:
+                        entity.die();
+                        break;
+                    case KeyEvent.VK_P:
+                        Game.theme.pause();
+                        break;
                 }
             }
         }

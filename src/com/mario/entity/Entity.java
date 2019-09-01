@@ -52,6 +52,7 @@ public abstract class Entity {
 
             if(Game.lives <= 0) {
                 Game.gameOver=true;
+                Game.theme.stop();
                 Game.theGameOver.play();
             }
         }

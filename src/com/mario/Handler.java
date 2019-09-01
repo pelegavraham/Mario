@@ -56,9 +56,13 @@ public class Handler {
                 int blue= (pixel) & 0xff;
 
                 if(red==0 && green==0 && blue==0)
-                    addTile(new Wall(x*64,y*64,64,64,true, Id.wall,this));
+                    addTile(new Wall(x*64,y*64,64,64,true, Id.wall,this, true));
+                if(red==128 && green==128 && blue==128)
+                    addTile(new Wall(x*64,y*64,64,64,true, Id.wall,this, false));
                 if(red==255 && green==255 && blue==0)
                     addTile(new PowerUpBlock(x*64,y*64,64,64,true, Id.powerUp,this,Game.upMushroom,1));
+                if(red==255 && green==255 && blue==32)
+                    addTile(new PowerUpBlock(x*64,y*64,64,64,true, Id.powerUp,this,Game.mushroom,0));
                 if(red==0 && green==0 && blue==255)
                     addEntity(new Player(x*64,y*64,48,48,Id.player,this));
                 if(red==255 && green==119 && blue==0)

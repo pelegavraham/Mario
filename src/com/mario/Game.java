@@ -20,7 +20,9 @@ public class Game extends Canvas implements Runnable {
     public static final int HEIGHT =192;
     public static final int SCALE =4;
     public static final String NAME="Super-Mario";
+    public static boolean themePlay = true;
     private static int level = 0;
+
     //public static final String imagesPath = System.getProperty("user.dir")+"\\images";
 
     private Thread thread;
@@ -41,6 +43,7 @@ public class Game extends Canvas implements Runnable {
     public static SpriteSheet sheet;
 
     public static Sprite grass;
+    public static Sprite ground;
     public static Sprite powerUp;
     public static Sprite usedPowerUp;
     public static Sprite pipe;
@@ -80,6 +83,7 @@ public class Game extends Canvas implements Runnable {
         mushroom= new Sprite(sheet, 2,1);
         upMushroom= new Sprite(sheet, 8,1);
         grass= new Sprite(sheet, 1,1);
+        ground= new Sprite(sheet,13,1);
         powerUp= new Sprite(sheet,3,1);
         usedPowerUp= new Sprite(sheet, 4,1);
         pipe = new Sprite(sheet, 6,1);

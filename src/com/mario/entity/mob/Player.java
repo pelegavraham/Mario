@@ -80,11 +80,11 @@ public class Player extends Entity {
                 }
                 if (getBoundsLeft().intersects(tile.getBounds())) {
                     setVelX(0);
-                    x = tile.getX() + tile.width;
+                    x = tile.getX() + width;
                 }
                 if (getBoundsRigth().intersects(tile.getBounds())) {
                     setVelX(0);
-                    x = tile.getX() - tile.width;
+                    x = tile.getX() - width;
                 }
             }
         }
@@ -117,7 +117,7 @@ public class Player extends Entity {
             }
             else if(e.getId()==Id.goomba || e.getId()==Id.bross || e.getId()==Id.plant) {
                 if(getBoundsBottom().intersects(e.getBoundsTop())){
-                    if(e.getId()!=Id.bross) {
+                    if(e.getId()==Id.goomba) {
                         e.die();
                         Game.stomp.play();
                     }
@@ -251,6 +251,9 @@ public class Player extends Entity {
                             case (2):
                                 setVelY(5);
                                 setVelX(0);
+                                break;
+                            case (3):
+                                setVelY(0);
                                 break;
                         }
                         if (pixelsTravelled > tile.heigth*2 + height){ goingDownPipe = false; }

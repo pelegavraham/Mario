@@ -35,8 +35,8 @@ public class Game extends Canvas implements Runnable {
     public static Sound thePowerUp;
     public static Sound stomp;
 
-
-    public static BufferedImage[] levels= new BufferedImage[2];
+    public static BufferedImage background;
+    public static BufferedImage[] levels= new BufferedImage[3];
 
     public static SpriteSheet sheet;
 
@@ -104,7 +104,9 @@ public class Game extends Canvas implements Runnable {
 
         try {
             levels[0] = ImageIO.read(getClass().getResource("/level1.png"));
-            levels[1] = ImageIO.read(getClass().getResource("/level2.png"));
+            levels[1] = ImageIO.read(getClass().getResource("/level3.png"));
+            levels[2] = ImageIO.read(getClass().getResource("/level2.png"));
+            background= ImageIO.read(getClass().getResource("/background3.jpg"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -185,15 +187,18 @@ public class Game extends Canvas implements Runnable {
             return;
         }
         Graphics g= bs.getDrawGraphics();
-        g.setColor(Color.blue);
-        g.fillRect(0,0,getWidth(),getHeight());
+
         if(!showDeathScreen){
+            g.drawImage(background,0,0,getWidth(),getHeight(),null);
             g.drawImage(coin.getImage(),20,20,75,75,null);
-            g.setColor(Color.white);
+            g.setColor(Color.BLACK);
             g.setFont(new Font("Courier",Font.BOLD,35));
             g.drawString("X "+coins, 90,75);
         }
         if(showDeathScreen){
+            g.setColor(Color.BLACK);
+            g.fillRect(0,0,getWidth(),getHeight());
+
             if(!gameOver) {
                 g.setColor(Color.white);
                 g.setFont(new Font("Courier", Font.BOLD, 35));

@@ -64,7 +64,9 @@ public class Handler {
                 if(red==255 && green==119 && blue==0)
                     addEntity(new Goomba(x*64,y*64,64,64, Id.goomba, this));
                 if(red==0 && (green>123 && green<129) && blue==0)
-                    addTile(new Pipe(x*64, y*64, 64,64*16,true,Id.pipe, this, 128-green,true));
+                    addTile(new Pipe(x*64, y*64, 64,64*5,true,Id.pipe, this, 128-green,true));
+                if(red==0 && (green==130) && blue==0)
+                    addTile(new Pipe(x*64, y*64, 64,64*2,true,Id.pipe, this, 3,false));
                 if(red==255 && green==250 && blue==0)
                     addEntity(new Coin(x*64, y*64, 64,64,Id.coin, this));
                 if(red==255 && green==0 && blue==255)

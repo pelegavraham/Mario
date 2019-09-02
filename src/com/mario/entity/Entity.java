@@ -55,6 +55,7 @@ public abstract class Entity {
                 Game.theme.stop();
                 Game.theGameOver.play();
             }
+            else Game.marioDie.play();
         }
     }
 

@@ -8,7 +8,6 @@ import com.mario.input.keyInput;
 import javax.imageio.ImageIO;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -16,10 +15,10 @@ import java.io.IOException;
 
 public class Game extends Canvas implements Runnable {
 
+    public int choiceWorld = 0;
     public static final int WIDTH =270;
     public static final int HEIGHT =192;
     public static final int SCALE =4;
-    public static final String NAME="Super-Mario";
     public static boolean themePlay = true;
     private static int level = 0;
 
@@ -38,7 +37,7 @@ public class Game extends Canvas implements Runnable {
     public static Sound stomp;
 
     public static BufferedImage background;
-    public static BufferedImage[] levels= new BufferedImage[3];
+    public static BufferedImage[] levels= new BufferedImage[4];
 
     public static SpriteSheet sheet;
 
@@ -67,11 +66,12 @@ public class Game extends Canvas implements Runnable {
     public static boolean gameOver = false;
     private boolean running= false;
 
-    public Game(){
+    public Game(int choiceWorld){
         Dimension size= new Dimension(WIDTH*SCALE, HEIGHT *SCALE);
         setPreferredSize(size);
         setMaximumSize(size);
         setMinimumSize(size);
+        this.choiceWorld = choiceWorld;
     }
 
     private void init(){
@@ -79,11 +79,37 @@ public class Game extends Canvas implements Runnable {
         camera= new Camera();
         addKeyListener(new keyInput());
 
-        sheet= new SpriteSheet("/mario5.png");
-        mushroom= new Sprite(sheet, 2,1);
-        upMushroom= new Sprite(sheet, 8,1);
+        try {
+            levels[0] = ImageIO.read(getClass().getResource("/level1.png"));
+            levels[1] = ImageIO.read(getClass().getResource("/level3.png"));
+            levels[2] = ImageIO.read(getClass().getResource("/level4.png"));
+            levels[3] = ImageIO.read(getClass().getResource("/level2.png"));
+            switch (choiceWorld){
+                case(0):
+                    sheet= new SpriteSheet("/sheet1.png");
+                    background= ImageIO.read(getClass().getResource("/background1.jpg"));
+                    break;
+                case(1):
+                    sheet= new SpriteSheet("/sheet2.png");
+                    background= ImageIO.read(getClass().getResource("/background2.jpg"));
+                    break;
+                case(2):
+                    sheet= new SpriteSheet("/sheet3.png");
+                    background= ImageIO.read(getClass().getResource("/background3.png"));
+                    break;
+                case(3):
+                    sheet= new SpriteSheet("/sheet4.png");
+                    background= ImageIO.read(getClass().getResource("/background4.jpg"));
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         grass= new Sprite(sheet, 1,1);
         ground= new Sprite(sheet,13,1);
+        mushroom= new Sprite(sheet, 2,1);
+        upMushroom= new Sprite(sheet, 8,1);
         powerUp= new Sprite(sheet,3,1);
         usedPowerUp= new Sprite(sheet, 4,1);
         pipe = new Sprite(sheet, 6,1);
@@ -104,15 +130,6 @@ public class Game extends Canvas implements Runnable {
         }
         for(int i=9; i<=11; i++) {
             flag[i-9] = new Sprite(sheet, i, 1);
-        }
-
-        try {
-            levels[0] = ImageIO.read(getClass().getResource("/level1.png"));
-            levels[1] = ImageIO.read(getClass().getResource("/level3.png"));
-            levels[2] = ImageIO.read(getClass().getResource("/level2.png"));
-            background= ImageIO.read(getClass().getResource("/background3.jpg"));
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
         try {

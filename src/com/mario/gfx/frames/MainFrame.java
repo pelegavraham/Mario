@@ -22,15 +22,7 @@ public class MainFrame extends JFrame{
             JPanel container = new JPanelWithBackground("C:\\Users\\peleg\\IdeaProjects\\Mario\\res\\background.jpg");
             ActionListener startGameListener = e -> {
                 setVisible(false);
-                Game game=new Game();
-                JFrame frame= new JFrame("Mario");
-                frame.add(game, BorderLayout.CENTER);
-                frame.pack();
-                frame.setResizable(false);
-                frame.setLocationRelativeTo(null);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setVisible(true);
-                game.start();
+                OptionFrame optionFrame = new OptionFrame();
             };
             ActionListener finishListener = e -> System.exit(0);
 

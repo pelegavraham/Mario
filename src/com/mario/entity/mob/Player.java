@@ -221,8 +221,17 @@ public class Player extends Entity {
                         falling = false;
                         gravity = 3.5;
                     } else if (getBounds().intersects(e.getBounds())) {
-                        die();
-                        Game.marioDie.play();
+                        if(state==PlayerState.BIG){
+                            state=PlayerState.SMALL;
+                            width -= width/4;
+                            height -= height /4;
+                            x+=width;
+                            y+= height;
+                        }
+                        else if(state==PlayerState.SMALL) {
+                            state = PlayerState.DEAD;
+                            die();
+                        }
                     }
 
                 }
